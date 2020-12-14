@@ -1,7 +1,17 @@
-# from flask_wtf import FlaskForm
-# from wtforms import StringField, FloatField, BooleanField, IntegerField, RadioField, SelectField
-# from wtforms.validators import InputRequired, Email, Optional
-# import email_validator
+from flask_wtf import FlaskForm
+from wtforms import StringField, FloatField, BooleanField, IntegerField, RadioField, SelectField
+from wtforms.validators import InputRequired, Email, Optional, Url, NumberRange
+import email_validator
+
+class AddPetForm(FlaskForm):
+    """Form for adding pets."""
+
+    name = StringField('Pet name', validators=[InputRequired(message='Pet name cannot be blank')])
+    species = StringField('Species', validators=[Optional()])
+    photo_url = StringField('Photo URL', validators=[URL(message='Incorrect URL'), Optional()])
+    age = IntegerField('Age', validators=[NumberRange(min=0, max=30, message='Must be between ages 0 to 30'), Optional()])
+    notes = StringField('Notes', validators=[Optional()])
+    available = BooleanField('Is pet available?')
 
 # class AddSnackForm(FlaskForm):
 #     """Form for adding snacks."""
@@ -12,11 +22,11 @@
 #     quantity = IntegerField('How many?')
 #     is_healthy = BooleanField('This is a healthy snack')
     
-#     # category = RadioField('Category', choices=[
-#     #                         ('ice','Ice Cream'), ('chips', 'Potato Chips'), ('candy', 'Candy')])
+    # category = RadioField('Category', choices=[
+    #                         ('ice','Ice Cream'), ('chips', 'Potato Chips'), ('candy', 'Candy')])
 
-#     category = SelectField('Category', choices=[
-#                             ('ice','Ice Cream'), ('chips', 'Potato Chips'), ('candy', 'Candy')])
+    # category = SelectField('Category', choices=[
+    #                         ('ice','Ice Cream'), ('chips', 'Potato Chips'), ('candy', 'Candy')])
 
 # class EmployeeForm(FlaskForm):
 #     """Form for adding employees."""
@@ -30,3 +40,11 @@
 #     name = StringField('Employee\'s Name', validators=[InputRequired(message='Name cannot be blank')])
 #     state = SelectField('State', choices=[(state, state) for state in states])
 #     dept_code = SelectField('Department Code')
+
+    # id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # name = db.Column(db.Text, nullable=False)
+    # species = db.Column(db.Text, nullable=False)
+    # photo_url = db.Column(db.Text)
+    # age = db.Column(db.Integer)
+    # notes = db.Column(db.Text)
+    # available = db.Column(db.Boolean, nullable=False, default=True)

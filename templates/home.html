@@ -6,7 +6,7 @@
     <div class="row">
         {% for pet in pets %}
         <div class="col-md-4">
-            <img src="{{pet.photo_url}}" class="img-fluid" alt="{{pet.name}} is a {{pet.species}} up for adoption">
+            <img src="{{pet.photo_url}}" class="img-fluid img-thumbnail" alt="{{pet.name}} is a {{pet.species}} up for adoption">
             <span class="pet-name">{{pet.name}}<b class="pet-status"> is available!</b></span>
         </div>
         {% endfor %}

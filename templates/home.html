@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% block title %} Home page {% endblock %}
 {% block content %}
-{% for msg in get_flashed_messages() %}
-<p>
-    {{msg}}
-</p>
-<ul>
-    <li>
-        <a href="/snacks/new">Add New Snack</a>
-    </li>
-    <li>
-        <a href="/phones">View Phones Directory</a>
-    </li>
-</ul>
-{% endfor %}
+<div class="container">
+    <div class="row">
+        {% for pet in pets %}
+        <div class="col-md-4">
+            <img src="{{pet.photo_url}}" class="img-fluid" alt="{{pet.name}} is a {{pet.species}} up for adoption">
+            <p>{{pet.name}} is available!</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <button class="btn btn-success">Add a Pet</button>
+    </div>
+</div>
 {% endblock %}

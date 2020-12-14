@@ -1,3 +1,21 @@
 .red-thing {
     color: red;
 }
+
+.pet-name {
+    color: #00C09D;
+}
+
+.pet-status {
+    color: #9ca0a3;
+}
+
+.add-pet-btn {
+    background: #00C09D;
+    border-color: #00C09D;
+}
+
+.add-pet-btn:hover {
+    background: #03a587;
+    border-color: #03a587;
+}

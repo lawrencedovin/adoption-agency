@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>New Snack</h1>
+<form method='POST'>
+    {{ form.hidden_tag() }}
+    <!-- Includes hidden tags. Gets the CSRF token but hides it from user -->
+    {% for field in form
+        if field.widget.input_type != 'hidden' %}
+    <!-- the if clause is for not showing CSRF Token on view and hidden input
+         CSRF is used to prevent hackers from submitting a form else where to our route -->
+    <p>
+        {{field.label}}
+        {{field}}
+
+        {% for error in field.errors %}
+            {{error}}
+        {% endfor %}
+    </p>
+    {% endfor %}
+    <button>Submit</button>
+</form>
+{% endblock %}

@@ -1,4 +1,5 @@
-.pet-name {
+.pet-name,
+.pet-name:hover {
     color: #00C09D;
 }
 
@@ -32,4 +33,13 @@
     height: 16px;
     width: 16px;
     margin-bottom: 4rem;
+}
+
+.title {
+    margin: 48px;
+}
+
+.pet-details{
+    text-align: center;
+    margin-bottom: 48px;
 }

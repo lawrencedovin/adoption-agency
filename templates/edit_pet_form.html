@@ -2,13 +2,15 @@
 {% block title %}Edit Pet{% endblock %}
 {% block content %}
 <div class="container">
-    <h1 class="display-3 text-center m-3">Edit Pet</h1>
+    <h1 class="display-3 text-center title">Edit Pet</h1>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <img src="{{pet.photo_url}}" class="img-fluid img-thumbnail edit-pet-img" alt="{{pet.name}}'s photo">
-            <p>Pet name: {{pet.name}}</p>
-            <p>Species: {{pet.species}}</p>
-            <p>Age: {{pet.age}}</p>
+            <img src="{{pet.photo_url}}" class="img-fluid img-thumbnail edit-pet-img d-flex mx-auto" alt="{{pet.name}}'s photo">
+            <div class="pet-details">
+                <p>Pet name: {{pet.name}}</p>
+                <p>Species: {{pet.species}}</p>
+                <p>Age: {{pet.age}}</p>
+            </div>
             <form method="POST">
                 {{ form.hidden_tag() }}
                 {% for field in form if field.widget.input_type != 'hidden'%}

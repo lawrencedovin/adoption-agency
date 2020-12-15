@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import *
+from forms import AddPetForm
 # from forms import AddSnackForm, EmployeeForm
 
 app = Flask(__name__)
@@ -19,34 +20,27 @@ def home_page():
     pets = Pet.query.filter_by(available=True).all()
     return render_template('home.html', pets=pets)
 
-# @app.route('/')
-# def home_page():
-#     return render_template('home.html')
+@app.route('/pets/new', methods=['GET', 'POST'])
+def add_pet():
+    """Pet add form; handle adding."""
 
-# @app.route('/phones')
-# def list_phones():
-#     employees = Employee.query.all()
-#     return render_template('phones.html', employees=employees)
+    form = AddPetForm()
 
-# @app.route('/snacks/new', methods=['GET', 'POST'])
-# def add_snack():
-#     """Snack add form; handle adding."""
+    if form.validate_on_submit():
+        name = form.name.data
+        species = form.species.data
+        photo_url = form.photo_url.data
+        age = form.age.data
+        notes = form.notes.data
+        available = form.available.data
 
-#     form = AddSnackForm()
+        new_pet = Pet(name=name, species=species, photo_url=photo_url, age=age, notes=notes, available=available)
+        db.session.add(new_pet)
+        db.session.commit()
 
-#     if form.validate_on_submit():
-#         name = form.name.data
-#         price = form.price.data
-#         quantity = form.quantity.data
-#         total_price = price * quantity
-#         is_healthy = form.is_healthy.data
-#         if is_healthy:
-#             flash(f'Added {name} at ${price} each and a healthy snack. Quantity: {quantity}, total price: ${total_price}')
-#         else: 
-#             flash(f'Added {name} at ${price} and a junkfood snack. Quantity: {quantity}, total price: ${total_price}')
-#         return redirect('/')
-#     else:
-#         return render_template('add_snack_form.html', form=form)
+        return redirect('/')
+    else: 
+        return render_template('add_pet_form.html', form=form)
 
 # @app.route('/employees/new', methods=['GET', 'POST'])
 # def add_employee():
@@ -87,3 +81,25 @@ def home_page():
 #         return redirect('/phones')
 #     else:
 #         return render_template('edit_employee_form.html', form=form)
+
+
+# @app.route('/snacks/new', methods=['GET', 'POST'])
+# def add_snack():
+#     """Snack add form; handle adding."""
+
+#     form = AddSnackForm()
+
+#     if form.validate_on_submit():
+#         name = form.name.data
+#         price = form.price.data
+#         quantity = form.quantity.data
+#         total_price = price * quantity
+#         is_healthy = form.is_healthy.data
+#         if is_healthy:
+#             flash(f'Added {name} at ${price} each and a healthy snack. Quantity: {quantity}, total price: ${total_price}')
+#         else: 
+#             flash(f'Added {name} at ${price} and a junkfood snack. Quantity: {quantity}, total price: ${total_price}')
+#         return redirect('/')
+#     else:
+#         return render_template('add_snack_form.html', form=form)
+

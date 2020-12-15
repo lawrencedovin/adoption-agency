@@ -13,9 +13,24 @@
 .add-pet-btn {
     background: #00C09D;
     border-color: #00C09D;
+    color: #fff
+}
+.home-page-btn {
+    background: #fff;
+    border-color: #00C09D;
+    color: #00C09D;
 }
 
-.add-pet-btn:hover {
+.add-pet-btn:hover,
+.home-page-btn:hover {
     background: #03a587;
     border-color: #03a587;
+    color: #fff;
+}
+
+
+#available {
+    height: 16px;
+    width: 16px;
+    margin-bottom: 4rem;
 }

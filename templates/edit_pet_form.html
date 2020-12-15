@@ -5,7 +5,27 @@
     <h1 class="display-3 text-center m-3">Edit Pet</h1>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            {% include 'base_form.html' %}
+            <img src="{{pet.photo_url}}" class="img-fluid img-thumbnail edit-pet-img" alt="{{pet.name}}'s photo">
+            <p>Pet name: {{pet.name}}</p>
+            <p>Species: {{pet.species}}</p>
+            <p>Age: {{pet.age}}</p>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                {% for field in form if field.widget.input_type != 'hidden'%}
+                <div class="form-group">
+                    {{field.label}}
+                    {{field(class_="form-control")}}
+            
+                    {% for error in field.errors %}
+                    <small class="form-text text-danger">
+                        {{error}}
+                    </small>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                <button class="btn add-pet-btn">Edit Pet</button>
+                <a href="/" class="btn home-page-btn">Go Back</a>
+            </form>
         </div>
     </div>
 </div> 

@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import *
-from forms import PetForm
+from forms import *
 # from forms import AddSnackForm, EmployeeForm
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ def home_page():
 def add_pet():
     """Pet add form; handle adding."""
 
-    form = PetForm()
+    form = AddPetForm()
 
     if form.validate_on_submit():
         name = form.name.data
@@ -45,58 +45,14 @@ def add_pet():
 @app.route('/pets/<int:pet_id>', methods=['GET', 'POST'])
 def edit_pet(pet_id):
     pet = Pet.query.get_or_404(pet_id)
-    form = PetForm(obj=pet)
+    form = EditPetForm(obj=pet)
 
     if form.validate_on_submit():
-        pet.name = form.name.data
-        pet.species = form.species.data
         pet.photo_url = form.photo_url.data
-        pet.age = form.age.data
         pet.notes = form.notes.data
         pet.available = form.available.data
 
         db.session.commit()
-        db.session.redirect(f'/pets/{pet_id}')
+        return redirect(f'/pets/{pet_id}')
     else:
         return render_template('edit_pet_form.html', pet=pet, form=form)
-
-# @app.route('/employees/<int:user_id>/edit', methods=['GET', 'POST'])
-# def edit_user(user_id):
-#     employee = Employee.query.get_or_404(user_id)
-#     # obj=employee prepopulates fields automatically based on employee data
-#     form = EmployeeForm(obj=employee)
-
-#     depts = db.session.query(Department.dept_code, Department.dept_name)
-#     form.dept_code.choices = depts
-
-#     if form.validate_on_submit():
-#         employee.name = form.name.data
-#         employee.state = form.state.data
-#         employee.dept_code = form.dept_code.data
-
-#         db.session.commit()
-#         return redirect('/phones')
-#     else:
-#         return render_template('edit_employee_form.html', form=form)
-
-
-# @app.route('/snacks/new', methods=['GET', 'POST'])
-# def add_snack():
-#     """Snack add form; handle adding."""
-
-#     form = AddSnackForm()
-
-#     if form.validate_on_submit():
-#         name = form.name.data
-#         price = form.price.data
-#         quantity = form.quantity.data
-#         total_price = price * quantity
-#         is_healthy = form.is_healthy.data
-#         if is_healthy:
-#             flash(f'Added {name} at ${price} each and a healthy snack. Quantity: {quantity}, total price: ${total_price}')
-#         else: 
-#             flash(f'Added {name} at ${price} and a junkfood snack. Quantity: {quantity}, total price: ${total_price}')
-#         return redirect('/')
-#     else:
-#         return render_template('add_snack_form.html', form=form)
-

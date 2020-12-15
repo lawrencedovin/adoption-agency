@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Edit Pet{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="display-3 text-center m-3">Edit Pet</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <img src="{{pet.photo_url}}" class="img-fluid img-thumbnail edit-pet-img" alt="{{pet.name}}'s photo">
+            <p>Pet name: {{pet.name}}</p>
+            <p>Species: {{pet.species}}</p>
+            <p>Age: {{pet.age}}</p>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{form.photo_url.label}}
+                    {{form.photo_url(class_="form-control")}}
+
+                    {{form.notes.label}}
+                    {{form.notes(class_="form-control")}}
+
+                    {{form.available.label}}
+                    {{form.available(class_="form-control")}}
+
+                    {% for error in form.errors %}
+                    <small class="form-text text-danger">
+                        {{error}}
+                    </small>
+                    {% endfor %}
+                </div>
+                <button class="btn add-pet-btn">Edit Pet</button>
+                <a href="/" class="btn home-page-btn">Go Back</a>
+            </form>
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+
+{% extends 'base.html' %}
+{% block title %}Edit Pet{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="display-3 text-center m-3">Edit Pet</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <img src="{{pet.photo_url}}" class="img-fluid img-thumbnail edit-pet-img" alt="{{pet.name}}'s photo">
+            <p>Pet name: {{pet.name}}</p>
+            <p>Species: {{pet.species}}</p>
+            <p>Age: {{pet.age}}</p>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                {% for field in form if field.widget.input_type != 'hidden'%}
+                <div class="form-group">
+                    {{field.label}}
+                    {{field(class_="form-control")}}
+            
+                    {% for error in field.errors %}
+                    <small class="form-text text-danger">
+                        {{error}}
+                    </small>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                <button class="btn add-pet-btn">Edit Pet</button>
+                <a href="/" class="btn home-page-btn">Go Back</a>
+            </form>
+        </div>
+    </div>
+</div> 
+{% endblock %}

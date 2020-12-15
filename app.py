@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import *
-from forms import AddPetForm
+from forms import PetForm
 # from forms import AddSnackForm, EmployeeForm
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ def home_page():
 def add_pet():
     """Pet add form; handle adding."""
 
-    form = AddPetForm()
+    form = PetForm()
 
     if form.validate_on_submit():
         name = form.name.data
@@ -42,26 +42,23 @@ def add_pet():
     else: 
         return render_template('add_pet_form.html', form=form)
 
-# @app.route('/employees/new', methods=['GET', 'POST'])
-# def add_employee():
+@app.route('/pets/<int:pet_id>', methods=['GET', 'POST'])
+def edit_pet(pet_id):
+    pet = Pet.query.get_or_404(pet_id)
+    form = PetForm(obj=pet)
 
-#     form = EmployeeForm()
+    if form.validate_on_submit():
+        pet.name = form.name.data
+        pet.species = form.species.data
+        pet.photo_url = form.photo_url.data
+        pet.age = form.age.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
 
-#     # Adds a tuple to the dept_code.choices select form field ie. ('mktg', 'Marketing')
-#     depts = db.session.query(Department.dept_code, Department.dept_name)
-#     form.dept_code.choices = depts
-#     if form.validate_on_submit():
-#         name = form.name.data
-#         state = form.state.data
-#         dept_code = form.dept_code.data
-
-#         new_employee = Employee(name=name, state=state, dept_code=dept_code)
-#         db.session.add(new_employee)
-#         db.session.commit()
-        
-#         return redirect('/phones')
-#     else:
-#         return render_template('add_employee_form.html', form=form)
+        db.session.commit()
+        db.session.redirect(f'/pets/{pet_id}')
+    else:
+        return render_template('edit_pet_form.html', pet=pet, form=form)
 
 # @app.route('/employees/<int:user_id>/edit', methods=['GET', 'POST'])
 # def edit_user(user_id):
